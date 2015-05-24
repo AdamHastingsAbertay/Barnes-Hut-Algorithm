@@ -6,35 +6,39 @@ public class Body  {
 	private GameObject dot;
 	private float mass;
 	private Vector3 velocity;
-	private Vector3 force;
+	private Vector3 acceleration;
+	private float G = 0.4f;
 
 	public Body(GameObject _dot){
 		mass = 2.0f;
 		dot = _dot;
 		velocity = Vector3.zero;
-		force = Vector3.zero;
+		acceleration = Vector3.zero;
 	}
 
-	public void update(float deltatime){
-		velocity += new Vector3(deltatime * force.x /mass,deltatime * force.y /mass,deltatime * force.z /mass);
-		dot.transform.position += new Vector3(velocity.x * deltatime,velocity.y * deltatime,velocity.z * deltatime);
+	public void update(){
+		velocity += acceleration;
+		dot.transform.position += velocity;
+		acceleration = Vector3.zero;
 	}
 
-	public float distance(Body b){
-		return Vector3.Distance(dot.transform.position,b.getDot().transform.position);
+	public void interac(Body b){
+		this.applyForce(b.attract(this));
 	}
 
-	public void resetForce(){
-		force = Vector3.zero;
+	public void applyForce(Vector3 force){
+		acceleration += new Vector3(force.x/mass,force.y/mass,force.z/mass);
 	}
 
-	public void addForce(Body b){
-		float G = 6.67e-11f;
-		float EPS = 3E4f;
-		Vector3 delta = b.getDot().transform.position - dot.transform.position;
-		float dist = distance(b);
-		float F = (G*mass * b.getMass()) / (dist*dist + EPS*EPS);
-		dot.transform.position += new Vector3 (F* delta.x/dist,F* delta.y/dist,F* delta.z/dist);
+	public Vector3 attract(Body b){
+		Vector3 forc = dot.transform.position - b.getDot().transform.position;
+		float distance = forc.magnitude;
+		distance = Mathf.Clamp(distance,50f,250f);
+
+		forc.Normalize();
+		float strenght = (G*mass*mass)/(distance*distance);
+		return new Vector3(forc.x*strenght,forc.y*strenght,forc.z*strenght);
+
 	}
 
 	public GameObject getDot(){
