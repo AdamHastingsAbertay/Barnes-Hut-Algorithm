@@ -14,6 +14,7 @@ public class BoardManager : MonoBehaviour {
 	private double framecount = 0;
 	private Boundary boundary;
 	private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+	private QuadNode quadTree;
 
 	void Start(){
 		boundary = new Boundary(1000);
@@ -26,11 +27,14 @@ public class BoardManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		boundary.update(bodys);
+		float size = Mathf.Max((boundary.max.x-boundary.min.x),(boundary.max.y-boundary.min.y));
+		Vector3 center = new Vector3((boundary.max.x+boundary.min.x)/2,(boundary.max.y+boundary.min.y)/2,(boundary.max.z+boundary.min.z)/2);
 
-
-
+		quadTree = new QuadNode(center,size);
 		createBodyIfNeeded ();
-
+		foreach(Body bod in bodys){
+			quadTree.addBody(bod);
+		}
 		if(compute){
 			stopwatch.Start();
 

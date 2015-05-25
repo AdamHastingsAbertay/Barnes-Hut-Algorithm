@@ -4,8 +4,8 @@ using System.Collections;
 public class Body  {
 
 	private GameObject dot;
-	private float mass;
-	private Vector3 position;
+	public float mass;
+	public Vector3 position;
 	private Vector3 velocity;
 	private Vector3 acceleration;
 	private float G = 0.4f;
@@ -50,6 +50,14 @@ public class Body  {
 
 	public Vector3 getPosition(){
 		return position;
+	}
+
+	public void addBody(Body body){
+		float m = mass + body.mass;
+		float x = (position.x * mass + body.position.x * body.mass) / m ;
+		float y = (position.y * mass + body.position.y * body.mass) / m ;
+		mass = m;
+		position = new Vector3(x,y,0);
 	}
 
 	public float getMass(){
