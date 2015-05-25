@@ -5,6 +5,7 @@ public class Body  {
 
 	private GameObject dot;
 	private float mass;
+	private Vector3 position;
 	private Vector3 velocity;
 	private Vector3 acceleration;
 	private float G = 0.4f;
@@ -14,12 +15,18 @@ public class Body  {
 		dot = _dot;
 		velocity = Vector3.zero;
 		acceleration = Vector3.zero;
+		if(_dot != null)
+			position = CopyVector(_dot.transform.position);
+		 else 
+			position = Vector3.zero;
 	}
 
 	public void update(){
 		velocity += acceleration;
-		dot.transform.position += velocity;
+		position += velocity;
 		acceleration = Vector3.zero;
+
+		dot.transform.position = CopyVector(position);
 	}
 
 	public void interac(Body b){
@@ -31,7 +38,7 @@ public class Body  {
 	}
 
 	public Vector3 attract(Body b){
-		Vector3 forc = dot.transform.position - b.getDot().transform.position;
+		Vector3 forc = position - b.getPosition();
 		float distance = forc.magnitude;
 		distance = Mathf.Clamp(distance,50f,250f);
 
@@ -41,11 +48,14 @@ public class Body  {
 
 	}
 
-	public GameObject getDot(){
-		return dot;
+	public Vector3 getPosition(){
+		return position;
 	}
 
 	public float getMass(){
 		return mass;
+	}
+	private Vector3 CopyVector(Vector3 vec) {
+		return new Vector3(vec.x,vec.y,vec.z);
 	}
 }
