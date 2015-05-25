@@ -12,9 +12,11 @@ public class BoardManager : MonoBehaviour {
 	private bool circle;
 	private int size;
 	private double framecount = 0;
+	private Boundary boundary;
 	private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
 	void Start(){
+		boundary = new Boundary(1000);
 		compute =true;
 		circle = false;
 		size = bodys.Count;
@@ -23,6 +25,10 @@ public class BoardManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		boundary.update(bodys);
+
+
+
 		createBodyIfNeeded ();
 
 		if(compute){
@@ -65,5 +71,12 @@ public class BoardManager : MonoBehaviour {
 			bodys.Add (new Body (dotGO));
 			size = bodys.Count;
 		}
+	}
+
+	public void OnDrawGizmos(){
+		float size = Mathf.Max((boundary.max.x-boundary.min.x),(boundary.max.y-boundary.min.y));
+		Vector3 center = new Vector3((boundary.max.x+boundary.min.x)/2,(boundary.max.y+boundary.min.y)/2,(boundary.max.z+boundary.min.z)/2);
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireCube(center,new Vector3(size,size,size));
 	}
 }
