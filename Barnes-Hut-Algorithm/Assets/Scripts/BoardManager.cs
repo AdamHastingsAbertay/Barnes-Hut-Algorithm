@@ -20,7 +20,7 @@ public class BoardManager : MonoBehaviour {
 	void Start(){
 		boundary = new Boundary(1000);
 		compute =true;
-		circle = false;
+		circle = true;
 		size = bodys.Count;
 		Debug.Log ("##### start #####");
 	}
@@ -31,7 +31,7 @@ public class BoardManager : MonoBehaviour {
 		float sized = Mathf.Max((boundary.max.x-boundary.min.x),(boundary.max.y-boundary.min.y));
 		Vector3 center = new Vector3((boundary.max.x+boundary.min.x)/2,(boundary.max.y+boundary.min.y)/2,(boundary.max.z+boundary.min.z)/2);
 		
-		quadTree = new QuadNode(center,sized);
+		quadTree = new QuadNode(1,center,sized);
 		createBodyIfNeeded ();
 		foreach(Body bod in bodys){
 			quadTree.addBody(bod);
@@ -57,6 +57,7 @@ public class BoardManager : MonoBehaviour {
 			compute = !compute;
 
 		if (Input.GetButtonDown ("Fire1")) {
+			circle = !circle;
 			Vector3 mouse = Input.mousePosition;
 			mouse = Camera.main.ScreenToWorldPoint (mouse);
 			mouse.z = 0;
@@ -65,8 +66,8 @@ public class BoardManager : MonoBehaviour {
 			size = bodys.Count;
 		}
 		framecount++;
-		if (circle && framecount % 10 == 0) {
-			GameObject dotGO = Instantiate (dot, new Vector3 (Mathf.Cos (Time.time) * 10, Mathf.Sin (Time.time) * 10, 0), Quaternion.identity) as GameObject;
+		if (circle && framecount % 20 == 0) {
+			GameObject dotGO = Instantiate (dot, new Vector3 (Mathf.Cos (Time.time) * 20, Mathf.Sin (Time.time) * 20, 0), Quaternion.identity) as GameObject;
 			bodys.Add (new Body (dotGO));
 			size = bodys.Count;
 		}

@@ -4,48 +4,44 @@ using System.Collections.Generic;
 
 public class QuadNode  {
 
-	private Body body = null;
+	private List<Body> bodys = new List<Body>();
 	private Body quadBody = null;
 
 	private Vector3 center;
 	private float size;
+	private int level;
 
-	private QuadNode nw;
-	private QuadNode ne;
-	private QuadNode sw;
-	private QuadNode se;
+	private int MAX_OBJECTS = 1;
+	private int MAX_LEVELS = 15;
 
-	public QuadNode(Vector3 center, float size){
+	private QuadNode[] childs;
+
+	public QuadNode(int level,Vector3 center, float size){
 		this.center = center;
 		this.size = size ;
+		this.level = level;
+		childs = new QuadNode[4];
 	}
 
 	public void addBody(Body body){
-		if(!contains(body)){
-			return;
+	 	if(childs[0] != null){
+			int index = getSplitIndex(body);
+			if(index != -1){
+				childs[index].addBody(body);
+				return;
+			}
 		}
-		if(this.body == null){
-			this.body = body;
-			return;
+		bodys.Add(body);
 
-		}
-		createChildNodeifNeeded();
-		nw.addBody(body);
-		ne.addBody(body);
-		sw.addBody(body);
-		se.addBody(body);
-
-		nw.addBody(this.body);
-		ne.addBody(this.body);
-		sw.addBody(this.body);
-		se.addBody(this.body);
-
-
-		if(quadBody==null){
-			quadBody = new Body(null);
-			quadBody.position = body.position;
-		}else{
-			quadBody.addBody(body);
+		if(bodys.Count > MAX_OBJECTS && level < MAX_LEVELS){
+			if(childs[0] == null){
+				split();
+			}
+			foreach(Body bo in bodys){
+				int index=getSplitIndex(bo);
+				childs[index].addBody(bo);
+			}
+			bodys.Clear();
 		}
 	}
 
@@ -61,25 +57,31 @@ public class QuadNode  {
 		return true;
 	}
 
-	private void createChildNodeifNeeded(){
-		if(nw !=null)
-			return;
+	private int getSplitIndex(Body body){
+		for(int i=0;i<4;i++){
+			if(childs[i].contains(body)){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private void split(){
 		float newSize = size/2f;
-		nw = new QuadNode(new Vector3(center.x-newSize/2f,center.y+newSize/2f,0f),newSize);
-		ne = new QuadNode(new Vector3(center.x+newSize/2f,center.y+newSize/2f,0f),newSize);
-		sw = new QuadNode(new Vector3(center.x-newSize/2f,center.y-newSize/2f,0f),newSize);
-		se = new QuadNode(new Vector3(center.x+newSize/2f,center.y-newSize/2f,0f),newSize);
+		childs[0] = new QuadNode(level+1,new Vector3(center.x-newSize/2f,center.y+newSize/2f,0f),newSize);
+		childs[1] = new QuadNode(level+1,new Vector3(center.x+newSize/2f,center.y+newSize/2f,0f),newSize);
+		childs[2] = new QuadNode(level+1,new Vector3(center.x-newSize/2f,center.y-newSize/2f,0f),newSize);
+		childs[3] = new QuadNode(level+1,new Vector3(center.x+newSize/2f,center.y-newSize/2f,0f),newSize);
 	}
 
 	public void getAllQuad(List<Quad> quads){
 		quads.Add(new Quad(center,size));
-		if(nw == null)
+		if(childs[0] == null)
 			return;
-		nw.getAllQuad(quads);
-		ne.getAllQuad(quads);
-		sw.getAllQuad(quads);
-		se.getAllQuad(quads);
+		for(int i=0;i<4;i++){
+			childs[i].getAllQuad(quads);
 
 	}
 
+}
 }
