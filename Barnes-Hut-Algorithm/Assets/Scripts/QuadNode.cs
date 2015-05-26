@@ -24,8 +24,7 @@ public class QuadNode  {
 		if(!contains(body)){
 			return;
 		}
-		if(body == null){
-			Debug.Log ("null");
+		if(this.body == null){
 			this.body = body;
 			return;
 
@@ -35,6 +34,12 @@ public class QuadNode  {
 		ne.addBody(body);
 		sw.addBody(body);
 		se.addBody(body);
+
+		nw.addBody(this.body);
+		ne.addBody(this.body);
+		sw.addBody(this.body);
+		se.addBody(this.body);
+
 
 		if(quadBody==null){
 			quadBody = new Body(null);

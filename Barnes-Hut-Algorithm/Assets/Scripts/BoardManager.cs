@@ -27,7 +27,11 @@ public class BoardManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		boundary.update(bodys);
+		float sized = Mathf.Max((boundary.max.x-boundary.min.x),(boundary.max.y-boundary.min.y));
+		Vector3 center = new Vector3((boundary.max.x+boundary.min.x)/2,(boundary.max.y+boundary.min.y)/2,(boundary.max.z+boundary.min.z)/2);
+		
+		quadTree = new QuadNode(center,sized);
 		createBodyIfNeeded ();
 		foreach(Body bod in bodys){
 			quadTree.addBody(bod);
@@ -59,11 +63,6 @@ public class BoardManager : MonoBehaviour {
 			GameObject dotGO = Instantiate (dot, mouse, Quaternion.identity) as GameObject;
 			bodys.Add (new Body (dotGO));
 			size = bodys.Count;
-			boundary.update(bodys);
-			float sized = Mathf.Max((boundary.max.x-boundary.min.x),(boundary.max.y-boundary.min.y));
-			Vector3 center = new Vector3((boundary.max.x+boundary.min.x)/2,(boundary.max.y+boundary.min.y)/2,(boundary.max.z+boundary.min.z)/2);
-			
-			quadTree = new QuadNode(center,sized);
 		}
 		framecount++;
 		if (circle && framecount % 10 == 0) {
