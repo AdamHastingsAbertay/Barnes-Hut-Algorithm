@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class QuadNode  : MonoBehaviour  {
+public class QuadNode  {
 
-	private Body body;
-	private Body quadBody;
+	private Body body = null;
+	private Body quadBody = null;
 
 	private Vector3 center;
 	private float size;
@@ -20,11 +21,14 @@ public class QuadNode  : MonoBehaviour  {
 	}
 
 	public void addBody(Body body){
-		if(!contains(body))
+		if(!contains(body)){
 			return;
+		}
 		if(body == null){
+			Debug.Log ("null");
 			this.body = body;
 			return;
+
 		}
 		createChildNodeifNeeded();
 		nw.addBody(body);
@@ -41,13 +45,13 @@ public class QuadNode  : MonoBehaviour  {
 	}
 
 	public bool contains(Body body){
-		if(body.position.x > center.x +(size/2f))
+		if(body.position.x >= center.x +(size/2f))
 			return false;
-		if(body.position.x < center.x -(size/2f))
+		if(body.position.x <= center.x -(size/2f))
 			return false;
-		if(body.position.y > center.y +(size/2f))
+		if(body.position.y >= center.y +(size/2f))
 			return false;
-		if(body.position.y < center.y -(size/2f))
+		if(body.position.y <= center.y -(size/2f))
 			return false;
 		return true;
 	}
@@ -56,15 +60,21 @@ public class QuadNode  : MonoBehaviour  {
 		if(nw !=null)
 			return;
 		float newSize = size/2f;
-		nw = new QuadNode(new Vector3(center.x-newSize,center.y+newSize,0f),newSize);
-		ne = new QuadNode(new Vector3(center.x+newSize,center.y+newSize,0f),newSize);
-		sw = new QuadNode(new Vector3(center.x-newSize,center.y-newSize,0f),newSize);
-		se = new QuadNode(new Vector3(center.x+newSize,center.y-newSize,0f),newSize);
+		nw = new QuadNode(new Vector3(center.x-newSize/2f,center.y+newSize/2f,0f),newSize);
+		ne = new QuadNode(new Vector3(center.x+newSize/2f,center.y+newSize/2f,0f),newSize);
+		sw = new QuadNode(new Vector3(center.x-newSize/2f,center.y-newSize/2f,0f),newSize);
+		se = new QuadNode(new Vector3(center.x+newSize/2f,center.y-newSize/2f,0f),newSize);
 	}
 
-	public void OnDrawGizmos(){
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireCube(center,new Vector3(size,size,size));
+	public void getAllQuad(List<Quad> quads){
+		quads.Add(new Quad(center,size));
+		if(nw == null)
+			return;
+		nw.getAllQuad(quads);
+		ne.getAllQuad(quads);
+		sw.getAllQuad(quads);
+		se.getAllQuad(quads);
+
 	}
 
 }

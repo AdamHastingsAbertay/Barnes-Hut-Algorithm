@@ -20,7 +20,7 @@ public class Boundary{
 		min = new Vector3(limit,limit,0);
 		max = new Vector3(-limit,-limit,0);
 		foreach(Body body in bodys){
-			getLimit(body.getPosition());
+			getLimit(body.position);
 		}
 		adjust();
 	}

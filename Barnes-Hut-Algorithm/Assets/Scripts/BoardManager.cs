@@ -15,6 +15,7 @@ public class BoardManager : MonoBehaviour {
 	private Boundary boundary;
 	private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 	private QuadNode quadTree;
+	private List<Quad> quads = new List<Quad>();
 
 	void Start(){
 		boundary = new Boundary(1000);
@@ -26,23 +27,13 @@ public class BoardManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		boundary.update(bodys);
-		float size = Mathf.Max((boundary.max.x-boundary.min.x),(boundary.max.y-boundary.min.y));
-		Vector3 center = new Vector3((boundary.max.x+boundary.min.x)/2,(boundary.max.y+boundary.min.y)/2,(boundary.max.z+boundary.min.z)/2);
 
-		quadTree = new QuadNode(center,size);
 		createBodyIfNeeded ();
 		foreach(Body bod in bodys){
 			quadTree.addBody(bod);
 		}
 		if(compute){
-			stopwatch.Start();
-
 			bruteFroceUpdate ();
-
-			stopwatch.Stop();
-			print("plop "+size+";"+stopwatch.ElapsedTicks);
-			stopwatch.Reset();
 		}
 	}
 
@@ -68,6 +59,11 @@ public class BoardManager : MonoBehaviour {
 			GameObject dotGO = Instantiate (dot, mouse, Quaternion.identity) as GameObject;
 			bodys.Add (new Body (dotGO));
 			size = bodys.Count;
+			boundary.update(bodys);
+			float sized = Mathf.Max((boundary.max.x-boundary.min.x),(boundary.max.y-boundary.min.y));
+			Vector3 center = new Vector3((boundary.max.x+boundary.min.x)/2,(boundary.max.y+boundary.min.y)/2,(boundary.max.z+boundary.min.z)/2);
+			
+			quadTree = new QuadNode(center,sized);
 		}
 		framecount++;
 		if (circle && framecount % 10 == 0) {
@@ -78,9 +74,11 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public void OnDrawGizmos(){
-		float size = Mathf.Max((boundary.max.x-boundary.min.x),(boundary.max.y-boundary.min.y));
-		Vector3 center = new Vector3((boundary.max.x+boundary.min.x)/2,(boundary.max.y+boundary.min.y)/2,(boundary.max.z+boundary.min.z)/2);
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireCube(center,new Vector3(size,size,size));
+		quadTree.getAllQuad(quads);
+		foreach(Quad quad in quads){
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireCube(quad.position,quad.size);
+		}
+		quads.Clear();
 	}
 }

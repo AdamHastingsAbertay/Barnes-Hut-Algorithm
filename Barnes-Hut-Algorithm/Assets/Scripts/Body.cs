@@ -38,7 +38,7 @@ public class Body  {
 	}
 
 	public Vector3 attract(Body b){
-		Vector3 forc = position - b.getPosition();
+		Vector3 forc = position - b.position;
 		float distance = forc.magnitude;
 		distance = Mathf.Clamp(distance,50f,250f);
 
@@ -48,10 +48,6 @@ public class Body  {
 
 	}
 
-	public Vector3 getPosition(){
-		return position;
-	}
-
 	public void addBody(Body body){
 		float m = mass + body.mass;
 		float x = (position.x * mass + body.position.x * body.mass) / m ;
@@ -59,10 +55,7 @@ public class Body  {
 		mass = m;
 		position = new Vector3(x,y,0);
 	}
-
-	public float getMass(){
-		return mass;
-	}
+	
 	private Vector3 CopyVector(Vector3 vec) {
 		return new Vector3(vec.x,vec.y,vec.z);
 	}
