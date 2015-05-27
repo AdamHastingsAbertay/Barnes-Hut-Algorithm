@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class QuadNode  {
 
 	private List<Body> bodys = new List<Body>();
-	private Body quadBody = null;
+	private Body averageBody = null;
 
 	private Vector3 center;
 	private float size;
@@ -32,6 +32,13 @@ public class QuadNode  {
 			}
 		}
 		bodys.Add(body);
+		if(averageBody == null){
+			averageBody = new Body(null);
+			averageBody.position = body.position;
+			averageBody.mass = body.mass;
+		}else{
+			averageBody.addBody(body);
+		}
 
 		if(bodys.Count > MAX_OBJECTS && level < MAX_LEVELS){
 			if(childs[0] == null){
