@@ -24,7 +24,7 @@ public class BoardManager : MonoBehaviour
 	{
 		boundary = new Boundary (1000);
 		compute = true;
-		circle = true;
+		circle = false;
 		bruteForce = false;
 		displayQuad = true;
 		size = bodys.Count;
