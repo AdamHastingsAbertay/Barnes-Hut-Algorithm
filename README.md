@@ -17,6 +17,8 @@ This article : [The Barnes-Hut Algorithm](http://arborjs.org/docs/barnes-hut) by
 </br> 
 My friend [Martin Magakian](https://github.com/martin-magakian) was building a [Barnes-Hut in Rust](https://github.com/martin-magakian/Barnes-Hut).<br />
 
-Contact
-=========
-Developed by Tristan Brismontier dev.tristan.brismontiern@gmail.com<br />
+License
+---------
+![License](https://i.creativecommons.org/l/by/4.0/88x31.png)<br />
+Licensed under Creative Commons Attribution 4.0<br />
+http://creativecommons.org/licenses/by/4.0/<br />
