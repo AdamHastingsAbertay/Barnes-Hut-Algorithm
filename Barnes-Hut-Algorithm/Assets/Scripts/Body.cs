@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Body  {
 
@@ -9,8 +10,10 @@ public class Body  {
 	private Vector3 velocity;
 	private Vector3 acceleration;
 	private float G = 0.4f;
+	public Guid InstanceID {get; private set;}
 
 	public Body(GameObject _dot){
+		this.InstanceID = Guid.NewGuid();
 		mass = 2.0f;
 		dot = _dot;
 		velocity = Vector3.zero;

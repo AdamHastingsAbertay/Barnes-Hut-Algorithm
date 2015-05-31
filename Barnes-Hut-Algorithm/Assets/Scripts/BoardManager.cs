@@ -39,11 +39,19 @@ public class BoardManager : MonoBehaviour
 		Vector3 center = new Vector3 ((boundary.max.x + boundary.min.x) / 2, (boundary.max.y + boundary.min.y) / 2, (boundary.max.z + boundary.min.z) / 2);
 		quadTree = new QuadNode (1, center, sized);
 
+		Debug.Log(bodys.Count);
 		foreach (Body bod in bodys) {
 			quadTree.addBody (bod);
 		}
 		if (compute) {
-			bruteFroceUpdate ();
+			BarnesHut ();
+		}
+	}
+
+	void BarnesHut(){
+		foreach (Body body in bodys){
+			quadTree.interact(body,0.5f);
+			body.update();
 		}
 	}
 
@@ -89,6 +97,8 @@ public class BoardManager : MonoBehaviour
 			foreach (Quad quad in quads) {
 				Gizmos.color = quad.color;
 				Gizmos.DrawWireCube (quad.position, quad.size);
+				if(quad.gravityCenter != Vector3.zero)
+		 			Gizmos.DrawSphere(quad.gravityCenter,quad.mass);
 			}
 			quads.Clear ();
 		}

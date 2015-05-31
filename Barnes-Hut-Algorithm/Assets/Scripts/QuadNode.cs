@@ -23,15 +23,24 @@ public class QuadNode  {
 		childs = new QuadNode[4];
 	}
 
-	public void addBody(Body body){
-	 	if(childs[0] != null){
-			int index = getSplitIndex(body);
-			if(index != -1){
-				childs[index].addBody(body);
-				return;
+	public void interact(Body body,float complexity){
+		if(averageBody == null)
+			return;
+		float distance = Vector3.Distance(body.position,averageBody.position);
+		if(distance == 0)
+			return;
+
+		if(size/distance >complexity && childs[0] != null){
+			for(int i=0;i<4;i++){
+				childs[i].interact(body,complexity);
 			}
+		}else{
+			body.interac(averageBody);
 		}
-		bodys.Add(body);
+	}
+
+	public void addBody(Body body){
+
 		if(averageBody == null){
 			averageBody = new Body(null);
 			averageBody.position = body.position;
@@ -40,26 +49,40 @@ public class QuadNode  {
 			averageBody.addBody(body);
 		}
 
+	 	if(childs[0] != null){
+			int index = getSplitIndex(body);
+			if(index != -1){
+				childs[index].addBody(body);
+
+				return;
+			}
+		}
+		if(!bodys.Contains(body)){
+			bodys.Add(body);
+		}
+
 		if(bodys.Count > MAX_OBJECTS && level < MAX_LEVELS){
 			if(childs[0] == null){
 				split();
 			}
 			foreach(Body bo in bodys){
 				int index=getSplitIndex(bo);
-				childs[index].addBody(body);
+				if(index != -1){
+					childs[index].addBody(body);
+				}
 			}
 			bodys.Clear();
 		}
 	}
 
 	public bool contains(Body body){
-		if(body.position.x > center.x +(size/2f))
+		if(body.position.x >= center.x +(size/2f))
 			return false;
-		if(body.position.x < center.x -(size/2f))
+		if(body.position.x <= center.x -(size/2f))
 			return false;
-		if(body.position.y > center.y +(size/2f))
+		if(body.position.y >= center.y +(size/2f))
 			return false;
-		if(body.position.y < center.y -(size/2f))
+		if(body.position.y <= center.y -(size/2f))
 			return false;
 		return true;
 	}
@@ -82,13 +105,15 @@ public class QuadNode  {
 	}
 
 	public void getAllQuad(List<Quad> quads){
-		quads.Add(new Quad(center,size,level));
+		if(averageBody == null){
+			quads.Add(new Quad(center,size,level,Vector3.zero,0));
+		}else{
+			quads.Add(new Quad(center,size,level,averageBody.position,averageBody.mass));
+		}
 		if(childs[0] == null)
 			return;
 		for(int i=0;i<4;i++){
 			childs[i].getAllQuad(quads);
-
+		}
 	}
-
-}
 }
