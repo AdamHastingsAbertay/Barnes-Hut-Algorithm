@@ -16,3 +16,7 @@ More
 This article : [The Barnes-Hut Algorithm](http://arborjs.org/docs/barnes-hut) by Tom Ventimiglia & Kevin Wayne, was realy usefull for me to have a good understanding of the Barnes-Hut-Algorithm.
 </br> 
 My friend [Martin Magakian](https://github.com/martin-magakian) was building a [Barnes-Hut in Rust](https://github.com/martin-magakian/Barnes-Hut).<br />
+
+Contact
+=========
+Developed by Tristan Brismontier dev.tristan.brismontiern@gmail.com<br />
