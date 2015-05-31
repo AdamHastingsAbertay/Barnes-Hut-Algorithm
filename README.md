@@ -7,3 +7,12 @@ Performance
 Compare to the Brute force solution, this simulation is more performante, despite the aproximation the behavior is pretty the same as Brute force.
 ![perf1](https://raw.github.com/TristanBrismontier/Barnes-Hut-Algorithm/master/image/Barnes-Hut-Compare.png)
 Execution time for N Body N->[1-1000], 10 mesures per N. 
+
+Quad-Tree and Center-Gravity visualisation.
+---------
+
+More
+---------
+This article : [The Barnes-Hut Algorithm](http://arborjs.org/docs/barnes-hut) by Tom Ventimiglia & Kevin Wayne, was realy usefull for me to have a good understanding of the Barnes-Hut-Algorithm.
+</br> 
+My friend [Martin Magakian](https://github.com/martin-magakian) was building a [Barnes-Hut in Rust](https://github.com/martin-magakian/Barnes-Hut).<br />
