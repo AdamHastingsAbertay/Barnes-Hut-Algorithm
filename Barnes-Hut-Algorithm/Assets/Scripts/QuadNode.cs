@@ -46,20 +46,20 @@ public class QuadNode  {
 			}
 			foreach(Body bo in bodys){
 				int index=getSplitIndex(bo);
-				childs[index].addBody(bo);
+				childs[index].addBody(body);
 			}
 			bodys.Clear();
 		}
 	}
 
 	public bool contains(Body body){
-		if(body.position.x >= center.x +(size/2f))
+		if(body.position.x > center.x +(size/2f))
 			return false;
-		if(body.position.x <= center.x -(size/2f))
+		if(body.position.x < center.x -(size/2f))
 			return false;
-		if(body.position.y >= center.y +(size/2f))
+		if(body.position.y > center.y +(size/2f))
 			return false;
-		if(body.position.y <= center.y -(size/2f))
+		if(body.position.y < center.y -(size/2f))
 			return false;
 		return true;
 	}
@@ -82,7 +82,7 @@ public class QuadNode  {
 	}
 
 	public void getAllQuad(List<Quad> quads){
-		quads.Add(new Quad(center,size));
+		quads.Add(new Quad(center,size,level));
 		if(childs[0] == null)
 			return;
 		for(int i=0;i<4;i++){
