@@ -41,16 +41,20 @@ public class BoardManager : MonoBehaviour
 		Vector3 center = new Vector3 ((boundary.max.x + boundary.min.x) / 2, (boundary.max.y + boundary.min.y) / 2, (boundary.max.z + boundary.min.z) / 2);
 		quadTree = new QuadNode (1, center, sized);
 
-		Debug.Log(bodys.Count);
+		stopwatch.Start();
 		foreach (Body bod in bodys) {
 			quadTree.addBody (bod);
 		}
 		if (compute) {
+		
 			if(bruteForce)
 				bruteFroceUpdate();
 			else
 				BarnesHut ();
 		}
+		stopwatch.Stop();
+		Debug.Log("plop "+bodys.Count+";"+stopwatch.ElapsedTicks);
+		stopwatch.Reset();
 	}
 
 	void BarnesHut(){
