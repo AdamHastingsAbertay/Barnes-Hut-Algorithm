@@ -10,7 +10,7 @@ Execution time for N Body N->[1-1000], 10 mesures per N.
 
 Quad-Tree and Center-Gravity visualisation.
 ---------
-![perf1](https://raw.github.com/TristanBrismontier/Barnes-Hut-Algorithm/master/image/barnes-hut-visu.png)
+<img src="https://raw.github.com/TristanBrismontier/Barnes-Hut-Algorithm/master/image/barnes-hut-visu.png" alt="Drawing" style="width: 400px;"/>
 
 More
 ---------
