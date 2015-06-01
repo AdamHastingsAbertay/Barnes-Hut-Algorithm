@@ -4,7 +4,7 @@ on n bodies. It is notable for having order O(n log n) compared to a direct-sum 
 
 Performance
 -------
-Compare to the Brute force solution, this simulation is more performante, despite the aproximation the behavior is pretty the same as Brute force.
+Compared to the Brute force solution, this simulation is more performante, despite the aproximation the behavior is pretty the same as Brute force.
 
 <img src="https://raw.github.com/TristanBrismontier/Barnes-Hut-Algorithm/master/image/Barnes-Hut-Compare.png" alt="Drawing" width=600px/></br>
 Execution time for N Body N->[1-1000], 10 mesures per N. 
