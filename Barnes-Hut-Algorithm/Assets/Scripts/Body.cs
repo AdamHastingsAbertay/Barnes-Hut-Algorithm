@@ -9,7 +9,7 @@ public class Body  {
 	public Vector3 position;
 	private Vector3 velocity;
 	private Vector3 acceleration;
-	private float G = 0.4f;
+	private float G = 0.04f;
 	public Guid InstanceID {get; private set;}
 
 	public Body(GameObject _dot){

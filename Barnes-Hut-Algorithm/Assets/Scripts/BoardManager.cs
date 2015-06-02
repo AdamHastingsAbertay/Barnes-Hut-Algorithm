@@ -18,17 +18,26 @@ public class BoardManager : MonoBehaviour
 	private Boundary boundary;
 	private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch ();
 	private QuadNode quadTree;
+	private float dist;
 	private List<Quad> quads = new List<Quad> ();
 
 	void Start ()
 	{
 		boundary = new Boundary (1000);
-		compute = true;
+		dist = 0;
+		compute = false;
 		circle = false;
 		bruteForce = false;
 		displayQuad = true;
 		size = bodys.Count;
-		Debug.Log ("##### start #####");
+		Debug.Log ("##### &start =#####");
+		for(int i = -10;i<10;i++){
+			for(int j = -10;j<10;j++){
+				GameObject dotGO = Instantiate (dot, new Vector3 (i*2, j*2, 0), Quaternion.identity) as GameObject;
+				bodys.Add (new Body (dotGO));
+			}
+		}
+
 	}
 
 	// Update is called once per frame
@@ -96,9 +105,10 @@ public class BoardManager : MonoBehaviour
 			size = bodys.Count;
 		}
 		framecount++;
-		if (circle && framecount % 10 == 0) {
-			GameObject dotGO = Instantiate (dot, new Vector3 (Mathf.Cos (Time.time) * 30, Mathf.Sin (Time.time) * 30, 0), Quaternion.identity) as GameObject;
+		if (circle) {
+			GameObject dotGO = Instantiate (dot, new Vector3 (Mathf.Cos (Time.time) * dist, Mathf.Sin (Time.time) * dist, 0), Quaternion.identity) as GameObject;
 			bodys.Add (new Body (dotGO));
+			dist+=0.05f;
 			size = bodys.Count;
 		}
 	}
