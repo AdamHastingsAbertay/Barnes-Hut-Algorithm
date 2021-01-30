@@ -17,8 +17,8 @@ public class Boundary{
 	}
 
 	public void update(List<Body> bodys){
-		min = new Vector3(limit,limit,0);
-		max = new Vector3(-limit,-limit,0);
+		min = new Vector3(limit,limit,limit);
+		max = new Vector3(-limit,-limit,-limit);
 		foreach(Body body in bodys){
 			getLimit(body.position);
 		}

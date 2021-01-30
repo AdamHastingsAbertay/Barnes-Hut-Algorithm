@@ -37,12 +37,21 @@ public class BoardManager : MonoBehaviour
         bruteForce = false;
         displayQuad = true;
         Debug.Log("##### &start =#####");
-        for (int i = -5; i < 5; i++) {
-            for (int j = -5; j < 5; j++) {
-                GameObject dotGO = Instantiate(dot, new Vector3(i * 2, j * 2, 0), Quaternion.identity) as GameObject;
-                bodys.Add(new Body(dotGO));
+
+        for (int i = -2; i < 2; i++) {
+
+            for (int j = -2; j < 2; j++)
+            {
+
+                for (int k = -2; k < 2; k++)
+                {
+                    GameObject dotGO = Instantiate(dot, new Vector3(i * 5, j * 5, k * 5), Quaternion.identity) as GameObject;
+                    bodys.Add(new Body(dotGO));
+                }
             }
+
         }
+
         size = bodys.Count;
         NodeCount.text = "Node Count: " + size;
 
@@ -55,7 +64,7 @@ public class BoardManager : MonoBehaviour
 
         boundary.update(bodys);
         float sized = Mathf.Max((boundary.max.x - boundary.min.x), (boundary.max.y - boundary.min.y));
-        Vector3 center = new Vector3((boundary.max.x + boundary.min.x) / 2, (boundary.max.y + boundary.min.y) / 2, (boundary.max.z + boundary.min.z) / 2);
+        Vector3 center = new Vector3((boundary.max.x + boundary.min.x) / 2, (boundary.max.y + boundary.min.y) / 2);
         quadTree = new QuadNode(1, center, sized);
 
         stopwatch.Start();
@@ -114,7 +123,7 @@ public class BoardManager : MonoBehaviour
 			//circle = !circle;
 			Vector3 mouse = Input.mousePosition;
 			mouse = Camera.main.ScreenToWorldPoint (mouse);
-			mouse.z = 0;
+			mouse.z = 50;
 			GameObject dotGO = Instantiate (dot, mouse, Quaternion.identity) as GameObject;
 			bodys.Add (new Body (dotGO));
 			size = bodys.Count;

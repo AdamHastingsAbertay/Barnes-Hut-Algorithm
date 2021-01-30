@@ -55,8 +55,9 @@ public class Body  {
 		float m = mass + body.mass;
 		float x = (position.x * mass + body.position.x * body.mass) / m ;
 		float y = (position.y * mass + body.position.y * body.mass) / m ;
+		float z = (position.z * mass + body.position.z * body.mass) / m ;
 		mass = m;
-		position = new Vector3(x,y,0);
+		position = new Vector3(x,y,z);
 	}
 	
 	private Vector3 CopyVector(Vector3 vec) {

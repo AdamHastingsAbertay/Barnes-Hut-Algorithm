@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class QuadNode  {
+public class QuadNode { 
 
 	private List<Body> bodys = new List<Body>();
 	private Body averageBody = null;
@@ -14,14 +14,14 @@ public class QuadNode  {
 	private int MAX_OBJECTS = 1;
 	private int MAX_LEVELS = 15;
 
-	private QuadNode[] childs;
-
 	public QuadNode(int level,Vector3 center, float size){
 		this.center = center;
 		this.size = size ;
 		this.level = level;
 		childs = new QuadNode[4];
 	}
+
+	private QuadNode[] childs;
 
 	public void interact(Body body,float complexity){
 		if(averageBody == null)
@@ -84,11 +84,12 @@ public class QuadNode  {
 			return false;
 		if(body.position.y <= center.y -(size/2f))
 			return false;
+
 		return true;
 	}
 
 	private int getSplitIndex(Body body){
-		for(int i=0;i<4;i++){
+		for(int i=0;i<4;i++){   //4
 			if(childs[i].contains(body)){
 				return i;
 			}
@@ -102,6 +103,10 @@ public class QuadNode  {
 		childs[1] = new QuadNode(level+1,new Vector3(center.x+newSize/2f,center.y+newSize/2f,0f),newSize);
 		childs[2] = new QuadNode(level+1,new Vector3(center.x-newSize/2f,center.y-newSize/2f,0f),newSize);
 		childs[3] = new QuadNode(level+1,new Vector3(center.x+newSize/2f,center.y-newSize/2f,0f),newSize);
+		//
+		//
+		//
+		//
 	}
 
 	public void getAllQuad(List<Quad> quads){
@@ -112,7 +117,7 @@ public class QuadNode  {
 		}
 		if(childs[0] == null)
 			return;
-		for(int i=0;i<4;i++){
+		for(int i=0;i<4;i++){ //4
 			childs[i].getAllQuad(quads);
 		}
 	}
