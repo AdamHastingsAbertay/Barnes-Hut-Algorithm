@@ -126,18 +126,22 @@ public class Octree {
 	private void split()
 	{
 		float newSize = size / 2f;
-		childs[0] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y + newSize / 2f, 0f), newSize);
-		childs[1] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y + newSize / 2f, 0f), newSize);
-		childs[2] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y - newSize / 2f, 0f), newSize);
-		childs[3] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y - newSize / 2f, 0f), newSize);
-		childs[4] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y + newSize / 2f, center.z + newSize / 2f), newSize);
-		childs[5] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y + newSize / 2f, center.z + newSize / 2f), newSize);
+		childs[0] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y + newSize / 2f, center.z + newSize / 2f), newSize);
+		childs[1] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y + newSize / 2f, center.z + newSize / 2f), newSize);
+		childs[2] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y - newSize / 2f, center.z + newSize / 2f), newSize);
+		childs[3] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y - newSize / 2f, center.z + newSize / 2f), newSize);
+		childs[4] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y + newSize / 2f, center.z - newSize / 2f), newSize);
+		childs[5] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y + newSize / 2f, center.z - newSize / 2f), newSize);
 		childs[6] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y - newSize / 2f, center.z - newSize / 2f), newSize);
 		childs[7] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y - newSize / 2f, center.z - newSize / 2f), newSize);
-		//
-		//
-		//
-		//
+
+
+		/*
+		childs[4] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y + newSize / 2f, center.z - newSize / 2f), newSize);
+		childs[5] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y + newSize / 2f, center.z - newSize / 2f), newSize);
+		childs[6] = new Octree(level + 1, new Vector3(center.x - newSize / 2f, center.y - newSize / 2f, center.z - newSize / 2f), newSize);
+		childs[7] = new Octree(level + 1, new Vector3(center.x + newSize / 2f, center.y - newSize / 2f, center.z - newSize / 2f), newSize);
+		*/
 	}
 
 	public void getAllOct(List<Oct> octs)
