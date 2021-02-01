@@ -38,15 +38,15 @@ public class BoardManager2 : MonoBehaviour
         displayOct = true;
         Debug.Log("##### &start =#####");
 
-        for (int i = -2; i < 0; i++)
+        for (int i = -5; i < 5; i++)
         {
 
-            for (int j = -2; j < 0; j++)
+            for (int j = -5; j < 5; j++)
             {
 
-                for (int k = -2; k < 0; k++)
+                for (int k = -5; k < 5; k++)
                 {
-                    GameObject dotGO = Instantiate(dot, new Vector3(i * 5, j * 5, k * 5), Quaternion.identity) as GameObject;
+                    GameObject dotGO = Instantiate(dot, new Vector3(i * 10, j * 10, k * 10), Quaternion.identity) as GameObject;
                     bodys.Add(new Body(dotGO));
                 }
             }
@@ -158,7 +158,7 @@ public class BoardManager2 : MonoBehaviour
             {
                 Gizmos.color = oct.color;
                 Gizmos.DrawWireCube(oct.position, oct.size);
-                if (oct.gravityCenter != Vector3.zero) { }
+               // if (oct.gravityCenter != Vector3.zero) { }
                 //Gizmos.DrawSphere(quad.gravityCenter,quad.mass);
             }
             octs.Clear();
