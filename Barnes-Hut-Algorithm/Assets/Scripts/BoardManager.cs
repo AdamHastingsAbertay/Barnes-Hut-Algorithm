@@ -38,16 +38,16 @@ public class BoardManager : MonoBehaviour
         displayQuad = true;
         Debug.Log("##### &start =#####");
 
-        for (int i = -2; i < 2; i++) {
+        for (int i = -15; i < 15; i++) { //5
 
-            for (int j = -2; j < 2; j++)
+            for (int j = -15; j < 15; j++) //5
             {
 
-                for (int k = -2; k < 2; k++)
-                {
-                    GameObject dotGO = Instantiate(dot, new Vector3(i * 5, j * 5, k * 5), Quaternion.identity) as GameObject;
+                //for (int k = -2; k < 2; k++)
+                //{
+                    GameObject dotGO = Instantiate(dot, new Vector3(i * 15, j * 15, 0), Quaternion.identity) as GameObject;
                     bodys.Add(new Body(dotGO));
-                }
+               // }
             }
 
         }

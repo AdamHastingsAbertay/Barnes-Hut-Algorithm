@@ -38,13 +38,13 @@ public class BoardManager2 : MonoBehaviour
         displayOct = true;
         Debug.Log("##### &start =#####");
 
-        for (int i = -1; i < 1; i++)
+        for (int i = -2; i < 2; i++) //5 5
         {
 
-            for (int j = -1; j < 1; j++)
+            for (int j = -2; j < 2; j++) //5 5
             {
 
-                for (int k = -1; k < 1; k++)
+                for (int k = -2 ; k < 2; k++) //4 5
                 {
                     GameObject dotGO = Instantiate(dot, new Vector3(i * 15, j * 15, k * 15), Quaternion.identity) as GameObject;
                     bodys.Add(new Body(dotGO));
