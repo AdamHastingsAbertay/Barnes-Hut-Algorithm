@@ -28,6 +28,8 @@ public class BoardManager2 : MonoBehaviour
     public Text NodeCount;
     public Text ThetaCount;
 
+    public bool StaticOct;
+
     void Start()
     {
         boundary = new Boundary(1000);
@@ -36,15 +38,16 @@ public class BoardManager2 : MonoBehaviour
         circle = false;
         bruteForce = false;
         displayOct = true;
+        StaticOct = false;
         Debug.Log("##### &start =#####");
 
-        for (int i = -2; i < 2; i++) //5 5
+        for (int i = -5; i < 5; i++) //5 5
         {
 
-            for (int j = -2; j < 2; j++) //5 5
+            for (int j = -5; j < 5; j++) //5 5
             {
 
-                for (int k = -2 ; k < 2; k++) //4 5
+                for (int k = -4 ; k < 4; k++) //4 5
                 {
                     GameObject dotGO = Instantiate(dot, new Vector3(i * 15, j * 15, k * 15), Quaternion.identity) as GameObject;
                     bodys.Add(new Body(dotGO));
@@ -68,6 +71,29 @@ public class BoardManager2 : MonoBehaviour
         Vector3 center = new Vector3((boundary.max.x + boundary.min.x) / 2, (boundary.max.y + boundary.min.y) / 2, (boundary.max.z + boundary.min.z) / 2);
         octTree = new Octree(1, center, sized);
 
+
+        foreach (Body bod in bodys)
+        {
+            octTree.addBody(bod);
+        }
+
+       
+        {
+            if (bruteForce)
+            {
+                bruteFroceUpdate();
+                ThetaCount.text = "θ Value: 0";
+            }
+            else
+            {
+                BarnesHut();
+                ThetaCount.text = "θ Value: " + Theta;
+            }
+            //stopwatch.Stop();
+            //Debug.Log("plop "+bodys.Count+";"+stopwatch.ElapsedTicks);
+            //stopwatch.Reset();
+        }
+        /*
         stopwatch.Start();
         foreach (Body bod in bodys)
         {
@@ -89,6 +115,7 @@ public class BoardManager2 : MonoBehaviour
         stopwatch.Stop();
         //Debug.Log("plop "+bodys.Count+";"+stopwatch.ElapsedTicks);
         stopwatch.Reset();
+        */
     }
 
     void BarnesHut()
@@ -97,7 +124,15 @@ public class BoardManager2 : MonoBehaviour
         {
             octTree.interact(body, Theta);
 
-            body.update();
+            if (StaticOct)
+            {
+                //Do nothing
+            }
+            else
+            {
+
+                body.update();
+            }
         }
     }
 
